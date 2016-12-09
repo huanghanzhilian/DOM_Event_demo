@@ -6,10 +6,10 @@
 ![tuozuai.gif](http://upload-images.jianshu.io/upload_images/3877962-7cc52e0392f21b9a.gif?imageMogr2/auto-orient/strip)
 
 
+![tuozuai1.gif](http://upload-images.jianshu.io/upload_images/3877962-729d355208b930bb.gif?imageMogr2/auto-orient/strip)
+
 
 面板拖拽状态切换功能。演示地址：[http://www.huanghanlian.com/DOM_Event_demo/keyEvent/](http://www.huanghanlian.com/DOM_Event_demo/keyEvent/)          
-
-![tuozuai1.gif](http://upload-images.jianshu.io/upload_images/3877962-729d355208b930bb.gif?imageMogr2/auto-orient/strip)
 
 
 
