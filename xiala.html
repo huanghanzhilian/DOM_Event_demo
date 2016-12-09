@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>下拉菜单</title>
+  <style type="text/css">
+    body, ul, li {
+      margin: 0;
+      padding: 0;
+      font-size: 13px;
+    }
+
+    ul, li {
+      list-style: none;
+    }
+
+    #divselect {
+      width: 186px;
+      margin: 80px auto;
+      position: relative;
+      z-index: 10000;
+    }
+
+    #divselect cite {
+      width: 150px;
+      height: 24px;
+      line-height: 24px;
+      display: block;
+      color: #807a62;
+      cursor: pointer;
+      font-style: normal;
+      padding-left: 4px;
+      padding-right: 30px;
+      border: 1px solid #333333;
+      /*background:url(xjt.png) no-repeat right center;*/
+    }
+
+    cite:before {
+      content: '';
+      position: absolute;
+      right: 7px;
+      bottom: 7px;
+      width: 0;
+      height: 0;
+      border-width: 4px;
+      border-style: solid;
+      border-color: #888 transparent transparent transparent;
+      transition: all 0.2s;
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      -ms-transition: all 0.2s;
+      transform-origin: 50% 25%;
+      -ms-transform-origin: 50% 25%;
+      -moz-transform-origin: 50% 25%;
+      -webkit-transform-origin: 50% 25%;
+      -o-transform-origin: 50% 25%;
+    }
+
+    .extended cite:before {
+      transform: rotate(180deg);
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+    }
+
+    #divselect ul {
+      width: 184px;
+      border: 1px solid #333333;
+      background-color: #ffffff;
+      position: absolute;
+      z-index: 20000;
+      margin-top: -1px;
+      display: none;
+      overflow: hidden;
+    }
+
+    #divselect ul li {
+      height: 24px;
+      line-height: 24px;
+    }
+
+    #divselect ul li a {
+      display: block;
+      height: 24px;
+      color: #333333;
+      text-decoration: none;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    .animated {
+      animation-fill-mode: both;
+      -webkit-animation-fill-mode: both;
+      -moz-animation-fill-mode: both;
+      -o-animation-fill-mode: both;
+      -ms-animation-fill-mode: both;
+    }
+
+    .speed_fast {
+      animation-duration: 0.2s;
+      -webkit-animation-duration: 0.2s;
+      -moz-animation-duration: 0.2s;
+      -o-animation-duration: 0.2s;
+      -ms-animation-duration: 0.2s;
+    }
+
+    .anim_extendDown {
+      animation-name: extendDown;
+      -webkit-animation-name: extendDown;
+      -moz-animation-name: extendDown;
+      -o-animation-name: extendDown;
+      -ms-animation-name: extendDown;
+    }
+
+    @keyframes extendDown {
+      0% {
+        border-bottom-color: transparent;
+        height: 0;
+      }
+      100% {
+        border-bottom-color: #333;
+        height: 120px;
+      }
+    }
+
+    @-webkit-keyframes extendDown {
+      0% {
+        border-bottom-color: transparent;
+        height: 0;
+      }
+      100% {
+        border-bottom-color: #333;
+        height: 120px;
+      }
+    }
+
+    @-moz-keyframes extendDown {
+      0% {
+        border-bottom-color: transparent;
+        height: 0;
+      }
+      100% {
+        border-bottom-color: #333;
+        height: 120px;
+      }
+    }
+
+    @-o-keyframes extendDown {
+      0% {
+        border-bottom-color: transparent;
+        height: 0;
+      }
+      100% {
+        border-bottom-color: #333;
+        height: 120px;
+      }
+    }
+
+    @-ms-keyframes extendDown {
+      0% {
+        border-bottom-color: transparent;
+        height: 0;
+      }
+      100% {
+        border-bottom-color: #333;
+        height: 120px;
+      }
+    }
+  </style>
+  <script type="text/javascript">
+    window.onload = function(){
+      var box = document.getElementById('divselect'), 
+          title = box.getElementsByTagName('cite')[0], 
+          menu = box.getElementsByTagName('ul')[0], 
+          as = box.getElementsByTagName('a'), 
+          index = -1;
+
+      function resetA() {
+        for(var i = 0; i < as.length; i++) {
+          as[i].style.background = "#fff";
+        }
+      }
+
+      function resetM() {
+        box.className = '';
+        menu.className = '';
+        menu.style.display = "none";
+        index = -1;
+        resetA();
+      }
+
+      title.onclick = function(event) {
+        event = event || window.event;
+        event.stopPropagation ? event.stopPropagation() : event.cancelBubble = true;
+        if(box.className == "extended"){
+          resetM();
+        } else {
+          box.className = "extended";
+          menu.className = "anim_extendDown animated speed_fast";
+          menu.style.display = "block";
+        }
+      }
+
+      for(var i = 0; i < as.length; i++) {
+        as[i].onmouseover = function() {
+          resetA();
+          this.style.background = "#ccc";
+          index = this.getAttribute('selectid') - 1;
+        }
+        as[i].onclick = function() {
+          resetM();
+          title.innerHTML = this.innerHTML;
+        }
+      }
+
+      document.onclick = function() {
+        resetM();
+      }
+
+      document.onkeydown = function (e) {
+        e = e || window.event;
+        if(box.className == "extended"){
+          if(e.keyCode == 40){
+              e.preventDefault ? e.preventDefault() : e.returnValue = false;
+              index++;
+              if(index > as.length - 1){
+                  index = 0;
+              }
+              resetA();
+              as[index].style.backgroundColor = "#ccc";
+          }else if(e.keyCode == 38){
+              e.preventDefault ? e.preventDefault() : e.returnValue = false;
+              index--;
+              if(index < 0){
+                  index = as.length - 1;
+              }
+              resetA();
+              as[index].style.backgroundColor = "#ccc";
+          }else if(e.keyCode == 13 && index != -1){
+              e.preventDefault ? e.preventDefault() : e.returnValue = false;
+              title.innerHTML = as[index].innerHTML;
+              index = -1;
+              resetA();
+              resetM();
+          }
+        }
+      };
+    }
+  </script>
+</head>
+<body>
+  <div id="divselect">
+    <cite>请选择分类</cite>
+    <ul>
+      <li id="li"><a href="javascript:;" selectid="1">ASP开发</a></li>
+      <li><a href="javascript:;" selectid="2">.NET开发</a></li>
+      <li><a href="javascript:;" selectid="3">PHP开发</a></li>
+      <li><a href="javascript:;" selectid="4">Javascript开发</a></li>
+      <li><a href="javascript:;" selectid="5">Java特效(什么鬼)</a></li>
+    </ul>
+  </div>
+  <script type="text/javascript">
+    window.onblur = function() {
+      document.title = '(●—●)';
+    };
+    window.onfocus = function() {
+      document.title = "下拉菜单";
+    };
+  </script>
+</body>
+</html>
